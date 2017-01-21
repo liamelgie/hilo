@@ -20,13 +20,13 @@ puts "\n"
 print "Initialising"
 ENV['Path'] += ";#{Dir.pwd}"; print "." 								# Temporarily add current directory to path (Allows access to the geckodriver)
 client = Mysql2::Client.new(:host => "ohmykirigiri.com", :username => "hilo", :password => "583m2H56KcwfMjuD",:database => "hilo"); print "." 	 # Configure MySQL
-driver = Selenium::WebDriver.for(:firefox); print "." 					# Configure Selenium WebDriver
+driver = Selenium::WebDriver.for(:firefox); print "."								# Configure Selenium WebDriver
 driver.get("http://www.higherlowergame.com/"); print "."				# Navigate to the higherlower game
 sleep(1); print "."														# Wait for the start button to appear
 start_button = driver.find_element(:id, "game-start-btn")				# Select and click the start button to begin the game
 start_button.click
-sleep(1)																# Wait for the game to start
-print ". Done!"; puts "\n"
+sleep(1); print "." 													# Wait for the game to start
+print " Done!"; puts ""; puts ""
 
 def vote_higher(driver)													# Votes that the next card has a higher score
 	higher_button = driver.find_element(:id, 'game-higher-btn')
