@@ -2,6 +2,7 @@ require 'selenium-webdriver'											# Require the Selenium WebDriver (https:/
 require 'mysql2'														# Require mysql2 (https://rubygems.org/gems/mysql2)
 
 # Gaudy ASCII Art
+puts "\n"
 puts "      ___                                     ___     "
 puts "     \/\\  \\                                   \/\   \\    "
 puts "     \\:\\  \\       ___                       \/::\\  \\   "
@@ -14,17 +15,18 @@ puts "   \\:\\  \\          \\::\/  \/   \\:\\\/:\/  \/     \\:\\\/:\/  \/  "
 puts "    \\:\\__\\         \/:\/  \/     \\::\/  \/       \\::\/  \/   "
 puts "     \\\/__\/         \\\/__\/       \\\/__\/         \\\/__\/    "
 puts "\n                               Developed by Liam Elgie"
+puts "\n"
 
-puts "Configuring path and drivers..."
-ENV['Path'] += ";#{Dir.pwd}" 											# Temporarily add current directory to path (Allows access to the geckodriver)
-client = Mysql2::Client.new(:host => "ohmykirigiri.com", :username => "hilo", :password => "583m2H56KcwfMjuD",:database => "hilo") 	 # Configure MySQL
-driver = Selenium::WebDriver.for(:firefox) 								# Configure Selenium WebDriver
-puts "Beginning game..."
-driver.get("http://www.higherlowergame.com/")							# Navigate to the higherlower game
-sleep(1)																# Wait for the start button to appear
+print "Initialising"
+ENV['Path'] += ";#{Dir.pwd}"; print "." 								# Temporarily add current directory to path (Allows access to the geckodriver)
+client = Mysql2::Client.new(:host => "ohmykirigiri.com", :username => "hilo", :password => "583m2H56KcwfMjuD",:database => "hilo"); print "." 	 # Configure MySQL
+driver = Selenium::WebDriver.for(:firefox); print "." 					# Configure Selenium WebDriver
+driver.get("http://www.higherlowergame.com/"); print "."				# Navigate to the higherlower game
+sleep(1); print "."														# Wait for the start button to appear
 start_button = driver.find_element(:id, "game-start-btn")				# Select and click the start button to begin the game
 start_button.click
 sleep(1)																# Wait for the game to start
+print ". Done!"; puts "\n"
 
 def vote_higher(driver)													# Votes that the next card has a higher score
 	higher_button = driver.find_element(:id, 'game-higher-btn')
@@ -145,7 +147,9 @@ def play_round(driver, client)											# Begins a new round
 end
 
 def shutdown() 															# Exits the program	
+	puts "\n"
 	puts "Submitting round to database and exiting..."
+	puts "\n"
 	submit_round(driver, client, get_current_round_score(driver))		# Submits the round to the database
 	driver.quit															# Quits the driver
 	exit 130															# Exits the program
